@@ -1,0 +1,48 @@
+/**
+ * Created by Dvir on 1/2/2018.
+ */
+
+/Users (uid)
+name
+uid
+avatar
+
+/Ducks (duckId)
+    duckId
+    avatar
+    name
+    text
+    timestamp
+    uid
+
+/likeCount (duckId)
+    duckId
+
+
+/usersDucks (uid)
+    ducks (duckId)
+        duckId
+        avatar
+        name
+        text
+        timestamp
+        uid
+
+/replies (duckId)
+    duckId
+    replyId
+        name
+        comment
+        uid
+        timestamp
+        avatar
+
+/userLikes (uid)
+    uid
+    duckid
+
+
+
+
+
+
