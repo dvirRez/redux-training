@@ -3,7 +3,7 @@
  */
 const ADD_LISTENER = 'ADD_LISTENER';
 
-function addListener(listenerId) {
+export function addListener(listenerId) {
     return {
         type: ADD_LISTENER,
         listenerId,

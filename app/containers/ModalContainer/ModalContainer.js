@@ -8,15 +8,6 @@ import { connect} from 'react-redux';
 import * as modalActionCreators from 'redux/modules/modal';
 import * as ducksActionCreators from 'redux/modules/ducks';
 
-console.log(`Modal action creators: `, modalActionCreators);
-console.log(`Duck action creators: `, ducksActionCreators);
-console.log(`Combined action creators: `, {
-    ...modalActionCreators,
-    ...ducksActionCreators
-
-});
-
-
 function mapStateToProps({users, modal}) {
     const duckTextLength = modal.duckText.length || 0;
     return {

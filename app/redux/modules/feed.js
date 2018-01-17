@@ -1,6 +1,10 @@
 /**
  * Created by Dvir on 1/15/2018.
  */
+import { listenToFeed } from 'helpers/api';
+import { addListener } from 'redux/modules/listeners'
+import { addMultipleDucks } from 'redux/modules/ducks'
+
 const SETTING_FEED_LISTENER = 'SETTING_FEED_LISTENER';
 const SETTING_FEED_LISTENER_ERROR = 'SETTING_FEED_LISTENER_ERROR';
 const SETTING_FEED_LISTENER_SUCCESS = 'SETTING_FEED_LISTENER_SUCCESS';
@@ -16,7 +20,7 @@ function settingFeedListener() {
 function settingFeedListenerError(error) {
     return {
         type: SETTING_FEED_LISTENER_ERROR,
-        error: 'Error fetching feeds.',
+        error: error,
     };
 }
 
@@ -34,10 +38,30 @@ function addNewDuckIdToFeed(duckId) {
     };
 }
 
-export function resetNedDucksAvailable() {
+export function resetNewDucksAvailable() {
     return {
         type: RESET_NEW_DUCKS_AVAILABLE,
     };
+}
+
+export function setAndHandleFeedListener() {
+    let initialFetch = true;
+    return function(dispatch, getState) {
+        if(getState().listeners.feed)  {
+            return;
+        }
+
+        dispatch(addListener('feed'));
+        dispatch(settingFeedListener());
+        listenToFeed(({feed, sortedIds}) => {
+            initialFetch
+            ? dispatch(settingFeedListenerSuccess(sortedIds))
+            : dispatch(addNewDuckIdToFeed(sortedIds[0]));
+
+        }, (error) => {
+            dispatch(settingFeedListenerError(error));
+        });
+    }
 }
 
 const initialState = {
