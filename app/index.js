@@ -7,6 +7,7 @@ import restricted from 'helpers/restricted';
 import thunk from 'redux-thunk';
 import * as reducers from 'redux/modules';
 
+console.log(reducers);
 
 const store = createStore(combineReducers(reducers), compose(
     applyMiddleware(thunk),

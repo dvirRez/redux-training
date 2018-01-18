@@ -27,7 +27,6 @@ class AuthenticateContainer extends React.Component {
     };
 
     render() {
-        console.log('is fetching: ', this.props.isFetching);
         return (
             <div>
                 <Authenticate onAuth={this.handleAuth}

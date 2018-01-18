@@ -7,3 +7,5 @@ export ducks from './ducks';
 export feed from './feed';
 export usersDucks from './usersDucks';
 export listeners from './listeners';
+export usersLikes from './usersLikes';
+export likeCount from './likeCount';
