@@ -18,20 +18,34 @@ Feed.propTypes = {
 
 export default function Feed (props) {
 
-	return (
-        props.isFetching
-            ?   <h1 className={header}>{'Fetching'}</h1> :
+    function renderHeader() {
+        return (
+            <h1 className={header}>{'Fetching'}</h1>
+        );
+    }
+
+    function rednderFeedBody() {
+        return (
             <div>
                 {props.newDucksAvailable ? <NewDucksAvailable handleClick={props.resetNewDucksAvailable} /> : null}
+
                 {props.duckIds.length === 0
-                ? <p className={header}>{'This is unfortunate.'} <br /> {'It appears there are no ducks yet 😞'}</p>
+                    ? <p className={header}>{'This is unfortunate.'} <br /> {'It appears there are no ducks yet 😞'}</p>
                     : null}
-               {props.duckIds.map((id) => (
-                   <DuckContainer
-                            duckId={id}
-                            key={id} />
+
+                {props.duckIds.map((id) => (
+                    <DuckContainer
+                        duckId={id}
+                        key={id} />
                 ))}
+
                 {props.error ? <p className={errorMsg}>{props.error}</p> : null}
             </div>
+        );
+    }
+	return (
+        props.isFetching
+            ?    renderHeader() : rednderFeedBody()
+
 	);
 }
