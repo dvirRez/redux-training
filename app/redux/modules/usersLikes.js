@@ -77,6 +77,17 @@ export function handleDeleteLike(duckId, e) {
     };
 }
 
+export function setUsersLikes() {
+ return function(dispatch, getState) {
+     const uid = getState().users.authId;
+
+     dispatch(fetchingLikes());
+     fetchUserLikes(uid)
+         .then( likes => dispatch(fetchingLikesSuccess(likes)))
+         .catch( error => dispatch(fetchLikesError(error)));
+ };
+}
+
 const initialState = {
     isFetching: false,
     error: '',

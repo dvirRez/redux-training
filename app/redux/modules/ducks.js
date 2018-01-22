@@ -55,7 +55,7 @@ export function addMultipleDucks(ducks) {
 
 export function duckFanout(duck) {
     return function(dispatch, getState) {
-        const uid = getState().users.authedId;
+        const uid = getState().users.authId;
 
         saveDuck(duck)
             .then((duckWithId) => {

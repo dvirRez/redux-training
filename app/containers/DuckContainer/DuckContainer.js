@@ -10,6 +10,13 @@ import { bindActionCreators } from 'redux';
 const { func, object, bool, number } = PropTypes;
 
 class DuckContainer extends React.Component{
+    constructor(props) {
+        super(props);
+
+        this.goToProfile = this.goToProfile.bind(this);
+        this.handleClick = this.handleClick.bind(this);
+    }
+
     static propTypes = {
         duck: object.isRequired,
         handleClick: func,
@@ -30,14 +37,14 @@ class DuckContainer extends React.Component{
         hideLikeCount: true,
     };
 
-    goToProfile (e) {
+    goToProfile(e) {
         e.stopPropagation();
-        this.context.router.push('/' + this.props.duck.uid);
+        this.context.router.history.push('/' + this.props.duck.uid);
     }
 
-    handleClick (e) {
+    handleClick(e) {
         e.preventDefault();
-        this.context.router.push('/duckDetail/' + this.props.duck.duckId);
+        this.context.router.history.push('/duckDetail/' + this.props.duck.duckId);
     }
 
     render () {

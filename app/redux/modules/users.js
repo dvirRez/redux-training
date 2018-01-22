@@ -100,7 +100,7 @@ const initialState = {
     isFetching: true,
     error: '',
     isAuthed: false,
-    authedId: '',
+    authId: '',
 }
 
 export default function users(state = initialState, action) {
@@ -109,13 +109,13 @@ export default function users(state = initialState, action) {
             return {
                 ...state,
                 isAuthed: true,
-                authedId: action.uid,
+                authId: action.uid,
             };
         case UNAUTH_USER :
             return {
                 ...state,
                 isAuthed: false,
-                authedId: '',
+                authId: '',
             };
         case FETCHING_USER:
             return {
