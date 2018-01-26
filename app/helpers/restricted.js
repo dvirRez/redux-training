@@ -20,15 +20,15 @@ export default (BaseComponent, store) => {
             }
 
             const {history} = props;
-            const nextPathName = history.location.pathname
-            const isAuthed = checkIfAuthed(store)
+            const nextPathName = history.location.pathname;
+            const isAuthed = checkIfAuthed(store);
             if (nextPathName === '/' || nextPathName === '/login') {
                 if (isAuthed === true) {
-                    history.replace({pathname: '/feed'})
+                    history.replace({pathname: '/feed'});
                 }
             } else {
                 if (isAuthed !== true) {
-                    history.replace({pathname: '/login'})
+                    history.replace({pathname: '/login'});
                 }
             }
         }

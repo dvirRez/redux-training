@@ -65,3 +65,13 @@ export function listenToFeed(successCB, errorCB) {
         successCB({feed, sortedIds});
     },errorCB);
 }
+
+export function fetchUser(uid) {
+    return ref.child(`users/${uid}`).once('value')
+        .then( (snapshot) => snapshot.val() || {});
+}
+
+export function fetchUsersDucks(uid) {
+    return ref.child(`usersDucks/${uid}`).once('value')
+        .then((snapshot) => snapshot.val() || {})
+}

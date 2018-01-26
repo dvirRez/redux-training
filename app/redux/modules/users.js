@@ -3,6 +3,7 @@
  */
 import { auth, logout, saveUser } from 'helpers/auth';
 import { formatUserInfo } from 'helpers/utils';
+import { fetchUser } from 'helpers/api';
 
 const AUTH_USER = 'AUTH_USER';
 const UNAUTH_USER = 'UNAUTH_USER';
@@ -47,17 +48,42 @@ export function fetchingUserSuccess(uid, user, timestamp) {
     };
 }
 
+export function removeFetchingUser() {
+    return {
+        type: REMOVE_FETCHING_USER,
+    };
+}
+
+export function fetchAndHandleUser(uid) {
+    return function(dispatch) {
+        return fetchUser(uid)
+            .then( (user) => dispatch(fetchingUserSuccess(uid, user, Date.now())))
+            .catch( (error) => dispatch(fetchingUserFailure(error)));
+    };
+}
+
 export function fetchAndHandleAuthedUser () {
     return function(dispatch) {
+
         dispatch(fetchingUser());
         return auth().then(({user, credential}) => {
+
             const userData = user.providerData[0];
-            const userInfo = formatUserInfo(userData);
+            const userInfo = formatUserInfo(user.uid, userData.photoURL, user.displayName);
             return dispatch(fetchingUserSuccess(user.uid, userInfo, Date.now()));
         })
-            .then(({user}) => saveUser(user))
-        .then((user) => dispatch(authUser(user.uid)))
-        .catch((error) => dispatch(fetchingUserFailure(error)));
+            .then(({user}) => {
+
+                return saveUser(user);
+            })
+        .then((user) => {
+
+            return dispatch(authUser(user.uid));
+        })
+        .catch((error) => {
+
+            return dispatch(fetchingUserFailure(error));
+        });
     };
 }
 
@@ -65,12 +91,6 @@ export function logoutAndUnauth() {
     return function(dispatch) {
         logout();
         dispatch(unauthUser());
-    };
-}
-
-export function removeFetchingUser() {
-    return {
-        type: REMOVE_FETCHING_USER,
     };
 }
 
@@ -101,7 +121,7 @@ const initialState = {
     error: '',
     isAuthed: false,
     authId: '',
-}
+};
 
 export default function users(state = initialState, action) {
     switch (action.type) {
@@ -146,6 +166,11 @@ export default function users(state = initialState, action) {
                     error: '',
                     [action.uid]: user(state[action.uid], action),
                 };
+        case REMOVE_FETCHING_USER:
+            return {
+                ...state,
+                isFetching: false
+            };
         default :
             return state;
     }

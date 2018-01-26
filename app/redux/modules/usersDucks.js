@@ -1,6 +1,9 @@
 /**
  * Created by Dvir on 1/15/2018.
  */
+import { addMultipleDucks } from 'redux/modules/ducks';
+import { fetchUsersDucks } from "helpers/api";
+
 const FETCHING_USERS_DUCKS = 'FETCHING_USERS_DUCKS';
 const FETCHING_USERS_DUCKS_ERROR = 'FETCHING_USERS_DUCKS_ERROR';
 const FETCHING_USERS_DUCKS_SUCCESS = 'FETCHING_USERS_DUCKS_SUCCESS';
@@ -13,19 +16,22 @@ function fetchingUsersDucks(uid) {
     };
 }
 function fetchingUsersDucksError(error) {
+    console.warn(error);
     return {
         type: FETCHING_USERS_DUCKS_ERROR,
         error: 'Error fetching Users Duck Ids',
     };
 }
-function fetchingUsersDucksSuccess(uid, duckIds, lasUpdated) {
+
+function fetchingUsersDucksSuccess(uid, ducksIds, lastUpdated) {
     return {
         type: FETCHING_USERS_DUCKS_SUCCESS,
         uid,
-        duckIds,
+        ducksIds,
         lastUpdated,
     };
 }
+
 export function addSingleUsersDuck(uid, duckId) {
     return {
         type: ADD_SINGLE_USERS_DUCK,
@@ -33,6 +39,20 @@ export function addSingleUsersDuck(uid, duckId) {
         duckId,
     };
 }
+
+export function fetchAndHandleUsersDucks(uid) {
+    return function(dispatch, getState) {
+        dispatch(fetchingUsersDucks(uid));
+        fetchUsersDucks(uid)
+            .then((ducks) => dispatch(addMultipleDucks(ducks)))
+            .then(({ducks}) => {
+                const sortedDucks = Object.keys(ducks).sort((a, b) => ducks[b].timestamp - ducks[a].timestamp);
+                return dispatch(fetchingUsersDucksSuccess(uid, sortedDucks, Date.now()));
+            })
+            .catch((error) => dispatch(fetchingUsersDucksError(error)));
+    };
+}
+
 
 const initialUsersDuckState = {
     lastUpdated: 0,
@@ -76,7 +96,7 @@ export default function usersDucks (state = initialState, action) {
                 error: '',
                 [action.uid]: {
                     lastUpdated: action.lastUpdated,
-                    duckIds: action.duckIds,
+                    duckIds: action.ducksIds,
                 },
             };
         case ADD_SINGLE_USERS_DUCK :

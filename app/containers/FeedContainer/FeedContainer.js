@@ -19,6 +19,7 @@ class FeedContainer extends React.Component {
     };
 
     componentDidMount() {
+
         this.props.setAndHandleFeedListener();
     }
 
@@ -37,9 +38,10 @@ class FeedContainer extends React.Component {
 
 function mapStateToProps({feed}) {
     const { newDucksAvailable, isFetching, error, duckIds } = feed;
+    const errorString = typeof error === 'string' ? error : error.message;
     return {
         isFetching,
-        error,
+        error: errorString,
         duckIds,
         newDucksAvailable,
     };

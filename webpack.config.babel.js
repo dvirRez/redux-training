@@ -33,7 +33,8 @@ const baseConfig = {
     ],
     output: {
         path: PATHS.build,
-        filename: "index_bundle.js"
+        filename: "index_bundle.js",
+        publicPath: '/',
     },
     module: {
         loaders: [

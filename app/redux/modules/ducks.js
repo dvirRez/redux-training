@@ -63,8 +63,7 @@ export function duckFanout(duck) {
                 dispatch(closeModal());
                 dispatch(addSingleUsersDuck(uid, duckWithId.duckId));
             })
-            .catch((error) => {
-                console.warn('Error in duckFanout', error);            });
+            .catch((error) => console.warn('Error in duckFanout', error));
     };
 }
 

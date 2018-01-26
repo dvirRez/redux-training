@@ -28,10 +28,12 @@ class MainContainer extends React.Component {
 	};
 
 	componentDidMount() {
+
 		firebaseAuth().onAuthStateChanged((user) => {
+
 			if(user) {
 				const userData = user.providerData[0];
-				const userInfo = formatUserInfo(userData);
+				const userInfo = formatUserInfo(user.uid, userData.photoURL, userData.displayName);
 				this.props.authUser(user.uid);
 				this.props.fetchingUserSuccess(user.uid, userInfo, Date.now());
                 this.props.setUsersLikes();
