@@ -54,7 +54,9 @@ export function addAndHandleLike(duckId, e) {
         Promise.all([
             saveToUsersLikes(uid, duckId),
             incrementNumberOfLikes(duckId)
-        ]).catch((error) => {
+        ]).then((values) => {
+            console.log(values);
+        }).catch((error) => {
             console.warn(error);
             dispatch(removeLike(duckId));
         });
@@ -70,7 +72,9 @@ export function handleDeleteLike(duckId, e) {
         Promise.all([
             deleteFromUsersLikes(uid, duckId),
             decrementNumberOfLikes(duckId)
-        ]).catch((error) => {
+        ]).then((values) => {
+            console.log(values);
+        }).catch((error) => {
             console.warn(error);
             dispatch(addLike(duckId));
         });

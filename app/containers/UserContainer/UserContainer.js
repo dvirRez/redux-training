@@ -54,7 +54,7 @@ function mapStateToProps({users, usersDucks}, props) {
     const name = noUser ? '' : user.info.name;
 
     return {
-        isFetching: users.isFetching, // || usersDucks.isFetching,
+        isFetching: users.isFetching || usersDucks.isFetching,
         error: users.error || usersDucks.error,
         duckIds: specificUsersDucks ? specificUsersDucks.duckIds : [],
         lastUpdatedDucks: (specificUsersDucks && specificUsersDucks.length > 0) ? specificUsersDucks.lastUpdated : 0,
