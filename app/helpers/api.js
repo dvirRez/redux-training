@@ -57,12 +57,14 @@ export function decrementNumberOfLikes  (duckId) {
 }
 
 export function listenToFeed(successCB, errorCB) {
+    let numberOfFetches = 0;
     ref.child('ducks').on('value', (snapshot) => {
         const feed = snapshot.val() || {};
         const sortedIds = Object.keys(feed).sort((a, b) => {
             return feed[b].timestamp - feed[a].timestamp;
         });
-        successCB({feed, sortedIds});
+        numberOfFetches = numberOfFetches + 1;
+        successCB({feed, sortedIds}, numberOfFetches);
     },errorCB);
 }
 
@@ -95,4 +97,9 @@ export function postReply (duckId, reply) {
         replyWithId,
         replyPromise,
     };
+}
+
+export function fetchReplies (duckId) {
+    return ref.child(`replies/${duckId}`).once('value')
+        .then((snapshot) => snapshot.val() || {});
 }

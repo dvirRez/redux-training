@@ -9,4 +9,4 @@ export usersDucks from './usersDucks';
 export listeners from './listeners';
 export usersLikes from './usersLikes';
 export likeCount from './likeCount';
-// export replies from './replies';
+export replies from './replies';

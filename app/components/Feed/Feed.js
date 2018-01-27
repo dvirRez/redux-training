@@ -8,6 +8,18 @@ import { newDuckContainer, header } from './styles.css';
 import { DuckContainer } from 'containers';
 import { errorMsg } from 'sharedStyles/styles.css';
 
+function NewDucksAvailable ({ handleClick }) {
+    return (
+        <div className={newDuckContainer} onClick={handleClick}>
+            New Ducks Available
+        </div>
+    )
+}
+
+NewDucksAvailable.propTypes = {
+    handleClick: PropTypes.func.isRequired
+}
+
 Feed.propTypes = {
    isFetching: PropTypes.bool.isRequired,
    error: PropTypes.string.isRequired,

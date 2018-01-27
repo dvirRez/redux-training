@@ -19,7 +19,6 @@ class FeedContainer extends React.Component {
     };
 
     componentDidMount() {
-
         this.props.setAndHandleFeedListener();
     }
 

@@ -1,7 +1,7 @@
 /**
  * Created by Dvir on 1/16/2018.
  */
-import { usersDucksExpirationLength, userExpirationLength } from 'config/constants';
+import { usersDucksExpirationLength, userExpirationLength, repliesExpirationLength  } from 'config/constants';
 
 export function formatUserInfo(uid, photoURL, displayName) {
     return {
@@ -35,6 +35,10 @@ export function staleUser(timestamp) {
 
 export function staleDucks(timestamp) {
     return getMiliSeconds(timestamp) > usersDucksExpirationLength;
+}
+
+export function staleReplies (timestamp) {
+    return getMiliSeconds(timestamp) > repliesExpirationLength;
 }
 
 export function formatReply ({name, uid, avatar}, reply) {

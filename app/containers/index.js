@@ -10,3 +10,4 @@ export ModalContainer from './ModalContainer/ModalContainer';
 export DuckContainer from './DuckContainer/DuckContainer';
 export UserContainer from './UserContainer/UserContainer';
 export DuckDetailsContainer from './DuckDetailsContainer/DuckDetailsContainer';
+export RepliesContainer from './RepliesContainer/RepliesContainer';
