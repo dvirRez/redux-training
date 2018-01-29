@@ -73,7 +73,6 @@ export function handleDeleteLike(duckId, e) {
             deleteFromUsersLikes(uid, duckId),
             decrementNumberOfLikes(duckId)
         ]).then((values) => {
-            console.log(values);
         }).catch((error) => {
             console.warn(error);
             dispatch(addLike(duckId));
