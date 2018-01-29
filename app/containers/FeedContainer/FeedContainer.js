@@ -7,13 +7,14 @@ import { PropTypes } from 'prop-types';
 import * as feedActionCreators from 'redux/modules/feed';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { List }from 'immutable';
 
 class FeedContainer extends React.Component {
     static propTypes = {
         newDucksAvailable: PropTypes.bool.isRequired,
         isFetching: PropTypes.bool.isRequired,
         error: PropTypes.string.isRequired,
-        duckIds: PropTypes.array.isRequired,
+        duckIds: PropTypes.instanceOf(List),
         setAndHandleFeedListener: PropTypes.func.isRequired,
         resetNewDucksAvailable: PropTypes.func.isRequired,
     };
@@ -36,13 +37,13 @@ class FeedContainer extends React.Component {
 }
 
 function mapStateToProps({feed}) {
-    const { newDucksAvailable, isFetching, error, duckIds } = feed;
+    const error = feed.get('error');
     const errorString = typeof error === 'string' ? error : error.message;
     return {
-        isFetching,
+        isFetching: feed.get('isFetching'),
         error: errorString,
-        duckIds,
-        newDucksAvailable,
+        duckIds: feed.get('duckIds'),
+        newDucksAvailable: feed.get('newDucksAvailable'),
     };
 }
 

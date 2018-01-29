@@ -46,11 +46,11 @@ class DuckDetailsContainer extends React.Component {
 
 function mapStateToProps({ducks, likeCount, users}, props) {
     return {
-        isFetching: ducks.isFetching || likeCount.isFetching,
-        error: ducks.error,
+        isFetching: ducks.get('isFetching')|| likeCount.isFetching,
+        error: ducks.get('error'),
         authedUser: users[users.authId].info,
         duckId: props.match.params.duckId,
-        duckAlreadyFetched: !!ducks[props.match.params.duckId],
+        duckAlreadyFetched: !!ducks.get(props.match.params.duckId),
     };
 }
 

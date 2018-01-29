@@ -7,6 +7,7 @@ import { PropTypes } from 'prop-types';
 import { newDuckContainer, header } from './styles.css';
 import { DuckContainer } from 'containers';
 import { errorMsg } from 'sharedStyles/styles.css';
+import {List } from 'immutable';
 
 function NewDucksAvailable ({ handleClick }) {
     return (
@@ -18,12 +19,12 @@ function NewDucksAvailable ({ handleClick }) {
 
 NewDucksAvailable.propTypes = {
     handleClick: PropTypes.func.isRequired
-}
+};
 
 Feed.propTypes = {
    isFetching: PropTypes.bool.isRequired,
    error: PropTypes.string.isRequired,
-   duckIds: PropTypes.array.isRequired,
+   duckIds: PropTypes.instanceOf(List),
    newDucksAvailable: PropTypes.bool.isRequired,
    resetNewDucksAvailable: PropTypes.func.isRequired,
 };
@@ -41,14 +42,12 @@ export default function Feed (props) {
             <div>
                 {props.newDucksAvailable ? <NewDucksAvailable handleClick={props.resetNewDucksAvailable} /> : null}
 
-                {props.duckIds.length === 0
+                {props.duckIds.size === 0
                     ? <p className={header}>{'This is unfortunate.'} <br /> {'It appears there are no ducks yet 😞'}</p>
                     : null}
 
                 {props.duckIds.map((id) => (
-                    <DuckContainer
-                        duckId={id}
-                        key={id} />
+                    <DuckContainer duckId={id} key={id} />
                 ))}
 
                 {props.error ? <p className={errorMsg}>{props.error}</p> : null}

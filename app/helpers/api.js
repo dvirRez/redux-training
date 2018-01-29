@@ -18,9 +18,9 @@ function saveToUserDucks(duck, duckId) {
         .set({...duck, duckId});
 }
 
-function saveLikeCount(duck, duckId) {
+function saveLikeCount(duckId) {
     return ref.child(`likeCount/${duckId}`)
-        .set({...duck, duckId});
+        .set(0);
 }
 
 export function saveDuck(duck) {
@@ -29,7 +29,7 @@ export function saveDuck(duck) {
     return Promise.all([
         duckPromise,
         saveToUserDucks(duck, duckId),
-        saveLikeCount(duck, duckId),
+        saveLikeCount(duckId),
     ]).then(() => ({...duck, duckId}));
 }
 
